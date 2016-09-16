@@ -1,1 +1,58 @@
+body {
+  background-color: #3A5F6F;
+  color: #FEFEE7;
+  font-family: Lucida Console; }
 
+h1 {
+  font-family: Lucida Console; }
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; }
+
+.gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.buttons {
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between; }
+
+.btn-group:last-child {
+  margin-left: 5px; }
+
+.flexrow {
+  display: flex;
+  flex-direction: row; }
+  .flexrow h4 {
+    margin: 0;
+    padding: 0; }
+
+.game {
+  border: 1px solid black;
+  padding: 0; }
+  .game .liveboard {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row; }
+    .game .liveboard:not(:last-child) {
+      border-bottom: 1px solid black; }
+    .game .liveboard .cell {
+      cursor: pointer;
+      width: 5px;
+      height: 5px;
+      background-color: #FEFEE7; }
+      .game .liveboard .cell:not(:last-child) {
+        border-right: 1px solid black; }
+      .game .liveboard .cell.new {
+        background-color: #ae1432; }
+      .game .liveboard .cell.old {
+        background-color: #800F25; }
+
+/*# sourceMappingURL=stylesheet.css.map */
