@@ -1,10 +1,14 @@
 body {
-  background-color: #3A5F6F;
+  background-color: #FDE23E;
   color: #FEFEE7;
   font-family: Lucida Console; }
 
 h1 {
-  font-family: Lucida Console; }
+  font-family: Lucida Console;
+  font-size: 40px;
+  background: -webkit-linear-gradient(left, blue, green, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
 
 .container {
   display: flex;
@@ -18,8 +22,8 @@ h1 {
   align-items: center; }
 
 .buttons {
-  width: 100%;
-  margin-top: 5px;
+  width: 50%;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between; }
 
@@ -29,13 +33,20 @@ h1 {
 .flexrow {
   display: flex;
   flex-direction: row; }
-  .flexrow h4 {
-    margin: 0;
-    padding: 0; }
+
+h4 {
+  margin: 0;
+  padding: 0;
+  background: -webkit-linear-gradient(left, blue, green, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
 
 .game {
-  border: 1px solid black;
-  padding: 0; }
+  border: 5px solid black;
+  padding: 0;
+  -webkit-box-shadow: 5px 5px 3px grey;
+  -moz-box-shadow: 5px 5px 3px grey;
+  box-shadow: 5px 5px 3px grey; }
   .game .liveboard {
     padding: 0;
     margin: 0;
@@ -45,14 +56,26 @@ h1 {
       border-bottom: 1px solid black; }
     .game .liveboard .cell {
       cursor: pointer;
-      width: 5px;
-      height: 5px;
-      background-color: #FEFEE7; }
+      width: 6px;
+      height: 6px;
+      background-color: #d8fef9; }
       .game .liveboard .cell:not(:last-child) {
         border-right: 1px solid black; }
       .game .liveboard .cell.new {
-        background-color: #ae1432; }
+        background-color: white; }
       .game .liveboard .cell.old {
         background-color: #800F25; }
+    .game .liveboard .cell:hover {
+      background-color: green; }
+
+footer {
+  color: white;
+  background-color: black;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 16px;
+  height: 30px;
+  width: 100%;
+  margin-top: 20px; }
 
 /*# sourceMappingURL=stylesheet.css.map */

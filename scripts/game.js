@@ -7,8 +7,9 @@
 
 'use strict';
 
-var gameSize = [60, 60];
-var density = 0.35; //min: 0, max: 1; .35 = ~35% of board populated at start
+var gameSize = [80, 140];
+var density = 0.15; //min: 0, max: 1; .35 = ~35% of board populated at start
+var isLive = false;
 
 //Possibly make game more complex than original? THEN seperate into multiple React classes!
 var Game = React.createClass({
@@ -46,28 +47,30 @@ var Game = React.createClass({
     };
   },
   clearGame: function clearGame() {
+    isLive = false;
     var grid = [];
     for (var i = 0; i < gameSize[0]; i++) {
       var row = [];
       for (var j = 0; j < gameSize[1]; j++) row.push(false);
       grid.push(row);
     }
-
     this.setState({ game: grid, gen: 0 });
   },
   setInterval: function setInterval() {
-    if (this.interval) clearInterval();
-    var t = this;
-    var timeout = function timeout() {
-      t.interval = setTimeout(timeout, t.state.time);
-      t.setState({ game: t.nextGen(), gen: t.state.gen + 1 });
-    };
-    this.interval = setTimeout(timeout, this.state.time);
-  },
-  clearInterval: function clearInterval() {
-    clearTimeout(this.interval);
-    console.log('cleared');
-    this.interval = false;
+    if (isLive) {
+      clearTimeout(this.interval);
+      this.interval = false;
+      isLive = false;
+    } else {
+      isLive = true;
+      if (this.interval) clearInterval();
+      var t = this;
+      var timeout = function timeout() {
+        t.interval = setTimeout(timeout, t.state.time);
+        t.setState({ game: t.nextGen(), gen: t.state.gen + 1 });
+      };
+      this.interval = setTimeout(timeout, this.state.time);
+    }
   },
   componentDidMount: function componentDidMount() {
     console.log('componentDidMount');
@@ -103,12 +106,6 @@ var Game = React.createClass({
         'Game of Life'
       ),
       React.createElement(
-        'h4',
-        null,
-        'Generation ',
-        this.state.gen
-      ),
-      React.createElement(
         'div',
         { className: 'game' },
         this.state.game.map(function (row, i) {
@@ -134,14 +131,15 @@ var Game = React.createClass({
           ),
           React.createElement(
             'button',
-            { className: 'btn btn-success', onClick: this.setTime(200) },
-            'Mild'
-          ),
-          React.createElement(
-            'button',
-            { className: 'btn btn-success', onClick: this.setTime(100) },
-            'Fast'
+            { className: 'btn btn-primary', onClick: this.setTime(100) },
+            'Normal'
           )
+        ),
+        React.createElement(
+          'h4',
+          null,
+          'Generation ',
+          this.state.gen
         ),
         React.createElement(
           'div',
@@ -149,16 +147,11 @@ var Game = React.createClass({
           React.createElement(
             'button',
             { className: 'btn btn-success', onClick: this.setInterval },
-            'Start'
+            'Play/Pause'
           ),
           React.createElement(
             'button',
-            { className: 'btn btn-success', onClick: this.clearInterval },
-            'Stop'
-          ),
-          React.createElement(
-            'button',
-            { className: 'btn btn-success', onClick: this.clearGame },
+            { className: 'btn btn-danger', onClick: this.clearGame },
             'Clear'
           )
         )
