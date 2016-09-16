@@ -1,1 +1,60 @@
 
+$cell-size: 5px
+$old-color: #800F25
+
+body
+  background-color: #3A5F6F
+  color: #FEFEE7
+  font-family: Lucida Console
+
+h1 
+  font-family: Lucida Console
+
+.container
+  display: flex
+  align-items: center
+  justify-content: center
+  height: 100vh
+
+.gameContainer
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.buttons
+  width: 100%
+  margin-top: 5px
+  display: flex
+  justify-content: space-between
+
+.btn-group:last-child
+  margin-left: 5px
+
+.flexrow 
+  display: flex
+  flex-direction: row
+  h4
+    margin: 0
+    padding: 0
+
+.game
+  border: 1px solid black
+  padding: 0
+  .liveboard
+    padding: 0
+    margin: 0
+    display: flex
+    flex-direction: row
+    &:not(:last-child) 
+      border-bottom: 1px solid black
+    .cell
+      cursor: pointer
+      width : $cell-size
+      height: $cell-size
+      background-color: #FEFEE7
+      &:not(:last-child) 
+        border-right: 1px solid black
+      &.new
+        background-color: lighten($old-color, 10%)
+      &.old
+        background-color: $old-color
