@@ -1,14 +1,32 @@
 
-$cell-size: 5px
+$cell-size: 6px
 $old-color: #800F25
+$list: blue, green, red
+
+@mixin gradient($direction, $list)
+  background: -webkit-linear-gradient($direction, $list)
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false)
+  @if $inset
+    -webkit-box-shadow:inset $top $left $blur $color
+    -moz-box-shadow:inset $top $left $blur $color
+    box-shadow:inset $top $left $blur $color
+  @else
+    -webkit-box-shadow: $top $left $blur $color
+    -moz-box-shadow: $top $left $blur $color
+    box-shadow: $top $left $blur $color
 
 body
-  background-color: #3A5F6F
+  background-color: #FDE23E
   color: #FEFEE7
   font-family: Lucida Console
 
 h1 
   font-family: Lucida Console
+  font-size: 40px
+  @include gradient(left, $list)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
 
 .container
   display: flex
@@ -22,8 +40,8 @@ h1
   align-items: center
 
 .buttons
-  width: 100%
-  margin-top: 5px
+  width: 50%
+  margin-top: 15px
   display: flex
   justify-content: space-between
 
@@ -33,13 +51,17 @@ h1
 .flexrow 
   display: flex
   flex-direction: row
-  h4
-    margin: 0
-    padding: 0
+h4
+  margin: 0
+  padding: 0
+  @include gradient(left, $list)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
 
 .game
-  border: 1px solid black
+  border: 5px solid black
   padding: 0
+  @include box-shadow(5px, 5px, 3px, grey)
   .liveboard
     padding: 0
     margin: 0
@@ -51,10 +73,23 @@ h1
       cursor: pointer
       width : $cell-size
       height: $cell-size
-      background-color: #FEFEE7
+      background-color: #d8fef9
       &:not(:last-child) 
         border-right: 1px solid black
       &.new
-        background-color: lighten($old-color, 10%)
+        background-color: lighten($old-color, 80%)
       &.old
         background-color: $old-color
+    .cell:hover
+      background-color: green
+    
+  
+footer
+  color: white
+  background-color: black
+  text-align: center
+  padding-top: 5px
+  font-size: 16px
+  height: 30px
+  width: 100%
+  margin-top: 20px

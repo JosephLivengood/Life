@@ -6,9 +6,9 @@
 */
 
 
-var gameSize = [60, 60];
-var density = .35; //min: 0, max: 1; .35 = ~35% of board populated at start
-
+var gameSize = [80, 140];
+var density = 0.15;          //min: 0, max: 1; .35 = ~35% of board populated at start
+var isLive = false;
 
 //Possibly make game more complex than original? THEN seperate into multiple React classes!
 var Game = React.createClass({
@@ -48,6 +48,7 @@ var Game = React.createClass({
     return () => t.setState({time: v});
   },
   clearGame() {
+    isLive = false;
     var grid = [];
     for (var i = 0; i < gameSize[0]; i++) {
       var row = [];
@@ -55,22 +56,23 @@ var Game = React.createClass({
         row.push(false);
       grid.push(row);
     }
-    
     this.setState({game: grid, gen: 0});
   },
   setInterval() {
-    if (this.interval) clearInterval();
-    var t = this;
-    var timeout = function() {
-      t.interval = setTimeout(timeout, t.state.time);
-      t.setState({game: t.nextGen(), gen: t.state.gen + 1});
-    };
+    if (isLive) {
+        clearTimeout(this.interval);
+        this.interval = false;
+        isLive = false;        
+    } else {
+        isLive = true;
+        if (this.interval) clearInterval();
+        var t = this;
+        var timeout = function() {
+            t.interval = setTimeout(timeout, t.state.time);
+            t.setState({game: t.nextGen(), gen: t.state.gen + 1});
+        };
     this.interval = setTimeout(timeout, this.state.time);
-  },
-  clearInterval() {
-    clearTimeout(this.interval);
-    console.log('cleared');
-    this.interval = false;
+    }
   },
   componentDidMount() {
     console.log('componentDidMount');
@@ -99,7 +101,6 @@ var Game = React.createClass({
     return (
       <div className='gameContainer'>
         <h1>Game of Life</h1>
-        <h4>Generation {this.state.gen}</h4>
         <div className='game'>
           {
             this.state.game.map( (row, i) => 
@@ -114,13 +115,14 @@ var Game = React.createClass({
         <div className='buttons'>
           <div className='btn-group'>
             <button className='btn btn-success' onClick={this.setTime(500)}>Slow</button>
-            <button className='btn btn-success' onClick={this.setTime(200)}>Mild</button>
-            <button className='btn btn-success' onClick={this.setTime(100)}>Fast</button>
+            <button className='btn btn-primary' onClick={this.setTime(100)}>Normal</button>
           </div>
+            
+            <h4>Generation {this.state.gen}</h4>
+            
           <div className='btn-group'>
-            <button className='btn btn-success' onClick={this.setInterval}>Start</button>
-            <button className='btn btn-success' onClick={this.clearInterval}>Stop</button>
-            <button className='btn btn-success' onClick={this.clearGame}>Clear</button>
+            <button className='btn btn-success' onClick={this.setInterval}>Play/Pause</button>
+            <button className='btn btn-danger' onClick={this.clearGame}>Clear</button>
           </div>
         </div>
       </div>
